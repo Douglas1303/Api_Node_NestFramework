@@ -1,6 +1,7 @@
 import { Address } from './addess.model';
 import { Creditcard } from './credit-card.model';
 import { Pet } from './pet.model';
+import { User } from './user.model';
 
 export class Customer {
     constructor(
@@ -13,5 +14,6 @@ export class Customer {
         public billingAddress: Address,
         public shippingAddress: Address,
         public creditCard: Creditcard,
+        public user: User,
     ) { }
 }
