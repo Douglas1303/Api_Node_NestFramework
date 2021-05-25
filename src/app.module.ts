@@ -4,7 +4,7 @@ import { BackofficeModule } from './backoffice/backoffice.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://ApiNode:244005@apinode.lv4wl.mongodb.net/ApiNodeNest'),
+    MongooseModule.forRoot('mongodb+srv://ApiNodeNest:244005@apinode.lv4wl.mongodb.net/ApiNodeNest'),
     BackofficeModule,
   ],
   controllers: [],
