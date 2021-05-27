@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Customer } from 'src/backoffice/models/customer.model';
 import { Address } from '../models/address.model';
 import { Pet } from '../models/pet.model';
+import { QueryDto } from '../dtos/query.dto';
 
 @Injectable()
 export class CustomerService {
@@ -56,17 +57,25 @@ export class CustomerService {
     //     return await this.model.findOneAndUpdate({ document }, data);
     // }
 
-    // async find(document): Promise<Customer> {
-    //     return await this.model.findOne({ document }).exec();
-    // }
+    async find(document): Promise<Customer> {
+        return await this.model.findOne({ document }).exec();
+    }
 
-    // async findAll(): Promise<Customer[]> {
-    //     return await this.model.find({}, 'firstName lastName name email document').exec();
-    // }
+    async findAll(): Promise<Customer[]> {
+        return await this.model.find({}, 'firstName lastName name email document')
+        .sort('name') //ordena pelo nome
+        .exec();
+    }
 
-    // async query(model: QueryDto): Promise<Customer[]> {
-    //     return await this.model.find(model.query, model.fields, { skip: model.skip, limit: model.take }).exec();
-    // }
+    async query(model: QueryDto): Promise<Customer[]> {
+        return await this.model
+            .find(model.query, model.fields, 
+            { 
+                skip: model.skip, limit: model.take 
+            })
+            .sort(model.sort)
+            .exec();
+    }
 
     // async saveOrUpdateCreditCard(document: string, data: CreditCard): Promise<Customer> {
     //     const options = { upsert: true };

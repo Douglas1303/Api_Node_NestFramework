@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AddressDto } from 'src/backoffice/dtos/address-dto';
+import { AddressDto } from 'src/modules/backoffice/dtos/create-address.dto';
 import { Flunt } from 'src/utils/flunt';
 import { Contract } from '../contract';
 

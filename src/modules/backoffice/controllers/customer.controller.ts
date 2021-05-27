@@ -1,10 +1,12 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors, HttpStatus, HttpException } from '@nestjs/common';
+import { Query } from 'mongoose';
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
 import { CreateAddressContract } from '../contracts/customer/create-address.contract';
 import { CreateCustomerContract } from '../contracts/customer/create-customer.contract';
 import { CreatePetContract } from '../contracts/customer/create-pet.contract';
-import { AddressDto } from '../dtos/address-dto';
-import { CreateCustomerDto } from '../dtos/create-customer-dto';
+import { AddressDto } from '../dtos/create-address.dto';
+import { CreateCustomerDto } from '../dtos/create-customer.dto';
+import { QueryDto } from '../dtos/query.dto';
 import { Customer } from '../models/customer.model';
 import { Pet } from '../models/pet.model';
 import { Result } from '../models/result.model';
@@ -110,4 +112,59 @@ export class CustomerController {
                 );
         }
     }
+
+    @Get()
+    async getAll()
+    {
+        try
+        {
+            const customers = await this.customerService.findAll(); 
+
+            return new Result(null, true, customers, null); 
+        }
+        catch(error)
+        {
+            throw new HttpException(
+                new Result('Não foi possivel buscar os clientes', false, null, error),
+                HttpStatus.BAD_REQUEST
+                );
+        }
+    }
+
+    @Get(':document')
+    async get(@Param('document') document)
+    {
+        try
+        {
+            const customer = await this.customerService.find(document); 
+
+            return new Result(null, true, customer, null); 
+        }
+        catch(error)
+        {
+            throw new HttpException(
+                new Result('Não foi possivel buscar o cliente', false, null, error),
+                HttpStatus.BAD_REQUEST
+                );
+        }
+    }
+
+    @Post('query')
+    async query(@Body() model: QueryDto)
+    {
+        try 
+        {
+            const customers = await this.customerService.query(model); 
+
+            return new Result(null, true, customers, null); 
+        } 
+        catch (error) 
+        {
+            throw new HttpException(
+                new Result('Não foi possivel buscar o cliente', false, null, error),
+                HttpStatus.BAD_REQUEST
+                );
+        }
+    }
+
 }
