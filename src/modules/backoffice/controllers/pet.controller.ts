@@ -2,7 +2,7 @@ import { Controller, Post, Body, Param, UseInterceptors, HttpStatus, HttpExcepti
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
 import { ResultDto } from 'src/modules/backoffice/dtos/result.dto';
 import { Pet } from 'src/modules/backoffice/models/pet.model';
-import { CreatePetContract } from '../contracts/customer/create-pet.contract';
+import { CreatePetContract } from '../contracts/pet/create-pet.contract';
 import { PetService } from 'src/modules/backoffice/services/pet.service';
 
 @Controller('v1/pets')

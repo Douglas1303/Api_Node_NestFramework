@@ -1,11 +1,14 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors, HttpStatus, HttpException } from '@nestjs/common';
 import { Query } from 'mongoose';
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
-import { CreateAddressContract } from '../contracts/customer/create-address.contract';
+import { CreateAddressContract } from '../contracts/address/create-address.contract';
 import { CreateCustomerContract } from '../contracts/customer/create-customer.contract';
+import { UpdateCustomerContract } from '../contracts/customer/update-customer.contract';
 import { AddressDto } from '../dtos/create-address.dto';
-import { CreateCustomerDto } from '../dtos/create-customer.dto';
+import { CreateCustomerDto } from '../dtos/customer/create-customer.dto';
+import { UpdateCustomerDto } from '../dtos/customer/update-customer.dto';
 import { QueryDto } from '../dtos/query.dto';
+import { ResultDto } from '../dtos/result.dto';
 import { Customer } from '../models/customer.model';
 import { Result } from '../models/result.model';
 import { User } from '../models/user.model';
@@ -72,6 +75,17 @@ export class CustomerController {
                 new Result('Não foi possivel realizer o cadastro.', false, null, error),
                 HttpStatus.BAD_REQUEST
                 ); 
+        }
+    }
+
+    @Put(':document')
+    @UseInterceptors(new ValidatorInterceptor(new UpdateCustomerContract()))
+    async update(@Param('document') document, @Body() model: UpdateCustomerDto) {
+        try {
+            await this.customerService.update(document, model);
+            return new ResultDto(null, true, model, null);
+        } catch (error) {
+            throw new HttpException(new ResultDto('Não foi possível atualizar seus dados', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
 
