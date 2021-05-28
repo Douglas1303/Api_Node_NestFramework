@@ -3,6 +3,7 @@ import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
 import { CreateCreditCardContract } from '../contracts/customer/create-credit-card.contract';
 import { CreateCustomerContract } from '../contracts/customer/create-customer.contract';
 import { UpdateCustomerContract } from '../contracts/customer/update-customer.contract';
+import { QueryContract } from '../contracts/query.contract';
 import { CreateCustomerDto } from '../dtos/customer/create-customer.dto';
 import { UpdateCustomerDto } from '../dtos/customer/update-customer.dto';
 import { QueryDto } from '../dtos/query.dto';
@@ -88,6 +89,7 @@ export class CustomerController {
     }
 
     @Post('query')
+    @UseInterceptors(new ValidatorInterceptor(new QueryContract()))
     async query(@Body() model: QueryDto)
     {
         try 

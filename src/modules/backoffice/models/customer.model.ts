@@ -1,5 +1,5 @@
 import { Address } from './address.model';
-import { Creditcard } from './credit-card.model';
+import { CreditCard } from './credit-card.model';
 import { Pet } from './pet.model';
 import { User } from './user.model';
 
@@ -11,7 +11,7 @@ export class Customer {
         public pets: Pet[],
         public billingAddress: Address,
         public shippingAddress: Address,
-        public creditCard: Creditcard,
+        public creditCard: CreditCard,
         public user: User,
     ) { }
 }
