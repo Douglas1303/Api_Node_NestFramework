@@ -6,6 +6,7 @@ import { UserSchema } from 'src/modules/backoffice/schemas/use.schema';
 import { AccountService } from 'src/modules/backoffice/services/account.service'; 
 import { CustomerService } from 'src/modules/backoffice/services/customer.service';
 import { AddressController } from './controllers/address.controller';
+import { PetController } from './controllers/pet.controller';
 import { AddressService } from './services/address.service';
 import { PetService } from './services/pet.service';
 
@@ -21,7 +22,7 @@ import { PetService } from './services/pet.service';
             schema: UserSchema,
         }
     ])],
-    controllers: [AddressController,CustomerController],
+    controllers: [AddressController,CustomerController, PetController],
     providers: [AccountService, CustomerService, AddressService, PetService], 
 })
 export class BackofficeModule {}
