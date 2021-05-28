@@ -1,10 +1,10 @@
 import { Controller, Post, Body, Param, UseInterceptors, HttpStatus, HttpException, Get } from '@nestjs/common';
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
-import { ResultDto } from 'src/modules/backoffice/dtos/result.dto';
 import { CreateAddressContract } from 'src/modules/backoffice/contracts/address/create-address.contract';
 import { Address } from 'src/modules/backoffice/models/address.model';
 import { AddressService } from 'src/modules/backoffice/services/address.service';
 import { AddressType } from 'src/modules/backoffice/enums/address-type.enum';
+import { Result } from '../models/result.model';
 
 @Controller('v1/addresses')
 export class AddressController {
@@ -15,9 +15,9 @@ export class AddressController {
     async createBilling(@Param('document') document, @Body() model: Address) {
         try {
             await this.service.create(document, model, AddressType.Billing);
-            return new ResultDto(null, true, model, null);
+            return new Result(null, true, model, null);
         } catch (error) {
-            throw new HttpException(new ResultDto('Não foi possível adicionar seu endereço', false, null, error), HttpStatus.BAD_REQUEST);
+            throw new HttpException(new Result('Não foi possível adicionar seu endereço', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -26,9 +26,9 @@ export class AddressController {
     async createShipping(@Param('document') document, @Body() model: Address) {
         try {
             await this.service.create(document, model, AddressType.Shipping);
-            return new ResultDto(null, true, model, null);
+            return new Result(null, true, model, null);
         } catch (error) {
-            throw new HttpException(new ResultDto('Não foi possível adicionar seu endereço', false, null, error), HttpStatus.BAD_REQUEST);
+            throw new HttpException(new Result('Não foi possível adicionar seu endereço', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -36,9 +36,9 @@ export class AddressController {
     async search(@Param('zipcode') zipcode) {
         try {
             const response = await this.service.getAddressByZipCode(zipcode).toPromise();
-            return new ResultDto(null, true, response.data, null);
+            return new Result(null, true, response.data, null);
         } catch (error) {
-            throw new HttpException(new ResultDto('Não foi possível localizar seu endereço', false, null, error), HttpStatus.BAD_REQUEST);
+            throw new HttpException(new Result('Não foi possível localizar seu endereço', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
 }

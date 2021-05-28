@@ -1,4 +1,4 @@
-export class Creditcard{
+export class CreditCard {
     constructor(
         public holder: string,
         public number: string,

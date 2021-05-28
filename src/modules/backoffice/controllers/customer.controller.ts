@@ -1,14 +1,12 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors, HttpStatus, HttpException } from '@nestjs/common';
-import { Query } from 'mongoose';
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
-import { CreateAddressContract } from '../contracts/address/create-address.contract';
+import { CreateCreditCardContract } from '../contracts/customer/create-credit-card.contract';
 import { CreateCustomerContract } from '../contracts/customer/create-customer.contract';
 import { UpdateCustomerContract } from '../contracts/customer/update-customer.contract';
-import { AddressDto } from '../dtos/create-address.dto';
 import { CreateCustomerDto } from '../dtos/customer/create-customer.dto';
 import { UpdateCustomerDto } from '../dtos/customer/update-customer.dto';
 import { QueryDto } from '../dtos/query.dto';
-import { ResultDto } from '../dtos/result.dto';
+import { CreditCard } from '../models/credit-card.model';
 import { Customer } from '../models/customer.model';
 import { Result } from '../models/result.model';
 import { User } from '../models/user.model';
@@ -83,9 +81,9 @@ export class CustomerController {
     async update(@Param('document') document, @Body() model: UpdateCustomerDto) {
         try {
             await this.customerService.update(document, model);
-            return new ResultDto(null, true, model, null);
+            return new Result(null, true, model, null);
         } catch (error) {
-            throw new HttpException(new ResultDto('Não foi possível atualizar seus dados', false, null, error), HttpStatus.BAD_REQUEST);
+            throw new HttpException(new Result('Não foi possível atualizar seus dados', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -107,4 +105,18 @@ export class CustomerController {
         }
     }
 
+    @Post(':document/credit-cards')
+    @UseInterceptors(new ValidatorInterceptor(new CreateCreditCardContract()))
+    async createBilling(@Param('document') document, @Body() model: CreditCard) 
+    {
+        try 
+        {
+            await this.customerService.saveOrUpdateCreditCard(document, model);
+            return new Result(null, true, model, null);
+        } 
+        catch (error) 
+        {
+            throw new HttpException(new Result('Não foi possível adicionar seu cartão de crédito', false, null, error), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

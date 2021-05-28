@@ -1,9 +1,9 @@
 import { Controller, Post, Body, Param, UseInterceptors, HttpStatus, HttpException, Put } from '@nestjs/common';
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
-import { ResultDto } from 'src/modules/backoffice/dtos/result.dto';
 import { Pet } from 'src/modules/backoffice/models/pet.model';
 import { CreatePetContract } from '../contracts/pet/create-pet.contract';
 import { PetService } from 'src/modules/backoffice/services/pet.service';
+import { Result } from '../models/result.model';
 
 @Controller('v1/pets')
 export class PetController {
@@ -14,9 +14,9 @@ export class PetController {
     async create(@Param('document') document, @Body() model: Pet) {
         try {
             await this.service.create(document, model);
-            return new ResultDto(null, true, model, null);
+            return new Result(null, true, model, null);
         } catch (error) {
-            throw new HttpException(new ResultDto('Não foi possível adicionar seu pet', false, null, error), HttpStatus.BAD_REQUEST);
+            throw new HttpException(new Result('Não foi possível adicionar seu pet', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -25,9 +25,9 @@ export class PetController {
     async update(@Param('document') document, @Param('id') id, @Body() model: Pet) {
         try {
             await this.service.update(document, id, model);
-            return new ResultDto(null, true, model, null);
+            return new Result(null, true, model, null);
         } catch (error) {
-            throw new HttpException(new ResultDto('Não foi possível atualizar seu pet', false, null, error), HttpStatus.BAD_REQUEST);
+            throw new HttpException(new Result('Não foi possível atualizar seu pet', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
 
