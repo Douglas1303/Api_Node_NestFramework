@@ -9,10 +9,10 @@ import { StoreModule } from 'src/modules/store/store.module';
     MongooseModule.forRoot('mongodb+srv://ApiNodeNest:244005@apinode.lv4wl.mongodb.net/ApiNodeNest'),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: '127.0.0.1',
       port: 3306,
-      username: '7180',
-      password: '1q2w3e4r!@#$',
+      username: 'root',
+      password: 'mysql',
       database: '7180',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

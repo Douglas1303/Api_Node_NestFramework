@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CustomerController } from 'src/modules/backoffice/controllers/customer.controller';
 import { CustomerSchema } from 'src/modules/backoffice/schemas/customer.schema';
@@ -13,15 +13,17 @@ import { PetService } from './services/pet.service';
 @Module({
     imports: [
         MongooseModule.forFeature([
-        {
-            name: 'Customer',
-            schema: CustomerSchema,
-        },
-        {
-            name: 'User',
-            schema: UserSchema,
-        }
-    ])],
+            {
+                name: 'Customer',
+                schema: CustomerSchema,
+            },
+            {
+                name: 'User',
+                schema: UserSchema,
+            },
+        ]),
+        HttpModule
+    ],
     controllers: [AddressController,CustomerController, PetController],
     providers: [AccountService, CustomerService, AddressService, PetService], 
 })
