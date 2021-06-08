@@ -10,14 +10,16 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) { }
 
-    async createToken(document, email, image, roles: string[]) {
+    async createToken() {
         const user: JwtPayload = {
-            document: document,
-            email: email,
-            image: image,
-            roles: roles
+            username: 'douglas@gmail.com'
         };
-        return this.jwtService.sign(user);
+        const accessToken = this.jwtService.sign(user); 
+
+        return {
+            expiresIn: 3600,
+            accessToken
+        }
     }
 
     async validateUser(payload: JwtPayload): Promise<any> {
