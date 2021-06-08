@@ -9,9 +9,15 @@ export class AccountService {
         
     }
 
-    async create(data: User): Promise<User> {
+    async create(data: User): Promise<User> 
+    {
         const user = new this.model(data); 
 
         return await user.save(); 
+    }
+
+    async findOneByUsername(username) 
+    {
+        return new User(username, "122324234242", true); 
     }
 }
