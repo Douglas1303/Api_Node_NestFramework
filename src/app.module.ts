@@ -9,7 +9,7 @@ import { StoreModule } from 'src/modules/store/store.module';
     MongooseModule.forRoot('mongodb+srv://ApiNodeNest:244005@apinode.lv4wl.mongodb.net/ApiNodeNest'),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1',
+      host: 'localhost',
       port: 3306,
       username: 'root',
       password: 'mysql',
@@ -24,3 +24,4 @@ import { StoreModule } from 'src/modules/store/store.module';
   providers: [],
 })
 export class AppModule {}
+
