@@ -1,4 +1,4 @@
-import { HttpModule, Module } from '@nestjs/common';
+import { CacheModule, HttpModule, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
@@ -21,6 +21,8 @@ import { AccountController } from './controllers/account.controller';
 
 @Module({
     imports: [
+        HttpModule,
+        CacheModule.register(), 
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
             secretOrPrivateKey: '333211411sa1w31',
@@ -40,7 +42,7 @@ import { AccountController } from './controllers/account.controller';
         ]),
         HttpModule
     ],
-    controllers: [AccountController, AddressController,CustomerController, PetController],
-    providers: [AccountService, CustomerService, AddressService, PetService, AuthService, JwtStrategy], 
+    controllers: [AddressController, CustomerController, PetController, AccountController],
+    providers: [AccountService, AddressService, CustomerService, PetService, AuthService, JwtStrategy],
 })
 export class BackofficeModule {}
