@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BackofficeModule } from 'src/modules/backoffice/backoffice.module';
+import { AgendaModule } from './modules/agenda/agenda.module';
 import { StoreModule } from './modules/store/store.module';
 
 
@@ -18,7 +19,7 @@ import { StoreModule } from './modules/store/store.module';
       synchronize: true,
     }),
     BackofficeModule,
-    //AgendaModule,
+    AgendaModule,
      StoreModule,
   ],
 })
