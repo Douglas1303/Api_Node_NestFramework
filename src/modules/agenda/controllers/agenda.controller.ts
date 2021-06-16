@@ -12,10 +12,13 @@ export class AgendaController {
     @Post()
     @UseGuards(JwtAuthGuard)
     async Book(@Req() request, @Body() model: BookRoomDto) {
-        try {
+        try 
+        {
             var command = new BookRoomCommand(request.user.document, model.roomId, model.date);
             await this.service.Book(command);
-        } catch (error) {
+        } 
+        catch (error)
+        {
             throw new HttpException(new Result('Não foi possível reservar sua sala', false, null, error), HttpStatus.BAD_REQUEST);
         }
     }
